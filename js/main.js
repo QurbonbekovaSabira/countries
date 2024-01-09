@@ -9,10 +9,27 @@ const select = document.querySelector(".select");
 
 const url = "https://restcountries.com/v3.1//all";
 
+let count = 0;
+
+let theme = localStorage.getItem("theme");
+if (theme == "dark-theme") {
+  document.body.classList.toggle("dark-theme");
+  header__btn.classList.toggle("header__btn_second");
+ if(count%2==0){
+count+=1;
+ }
+}
+
 header__btn.addEventListener("click", (e) => {
   document.body.classList.toggle("dark-theme");
-
   header__btn.classList.toggle("header__btn_second");
+  console.log(count);
+  if (count % 2 == 0) {
+    localStorage.setItem("theme", "dark-theme");
+  } else {
+    localStorage.setItem("theme", "ligth-theme");
+  }
+  count++;
 });
 
 const render = async () => {
@@ -49,7 +66,25 @@ form.addEventListener("submit", (e) => {
     .then((data) => Push(data, card));
 });
 
+select.addEventListener("click", (e) => {
+  let region = select.value;
+  if (region != "Filter by Region") {
+    found(region);
+  } else {
+    found("All");
+  }
+});
 
-select.addEventListener("click",(e)=>{
-  console.log(e.target.id?e.target.id:"Hi");
-})
+const found = async (region) => {
+  try {
+    const promis = await fetch("https://restcountries.com/v3.1//all");
+    const data = await promis.json();
+    console.log(region);
+    let countries = data.filter((item) => item.region == region);
+    if (region == "All") {
+      Push(data, card);
+    } else {
+      Push(countries, card);
+    }
+  } catch (error) {}
+};

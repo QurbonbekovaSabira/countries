@@ -12,10 +12,27 @@ const heroAbout__btnBox_content = document.querySelector(
   ".heroAbout__btnBox_content"
 );
 
+let count = 0;
+
+let theme = localStorage.getItem("theme");
+if (theme == "dark-theme") {
+  document.body.classList.toggle("dark-theme");
+  header__btn.classList.toggle("header__btn_second");
+ if(count%2==0){
+count+=1;
+ }
+}
+
 header__btn.addEventListener("click", (e) => {
   document.body.classList.toggle("dark-theme");
-
   header__btn.classList.toggle("header__btn_second");
+  console.log(count);
+  if (count % 2 == 0) {
+    localStorage.setItem("theme", "dark-theme");
+  } else {
+    localStorage.setItem("theme", "ligth-theme");
+  }
+  count++;
 });
 
 const render = async () => {

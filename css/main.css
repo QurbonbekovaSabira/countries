@@ -229,12 +229,12 @@ img {
     } */
 }
 
-option {
+.option {
     color: var(--title);
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
-    padding: 16px 24px;
+  margin-bottom: 5px;
     margin-top: 4px;
 }
 
